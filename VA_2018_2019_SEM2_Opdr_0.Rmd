@@ -1,0 +1,102 @@
+---
+title: "VA 2018-2019 sem-2 Opdracht 0"
+author: "<vul je naam in>"
+date: "<vul de datum in>"
+output: 
+        html_document: ## pdf_document 
+          theme: cerulean
+          toc: true
+          number_sections: false
+editor_options: 
+  chunk_output_type: console
+---
+### Deadline
+De deadline voor deze opdracht is:
+
+* Dinsdag 6 februari 12:00 / Vrijdag 8 februari 12:00
+
+# Oefenen R Markdown
+## Knitten van file
+Door deze *R Markdown* file via **knit** te compileren wordt alle code gerund (installeer eventueel eerst de packages) en de packages worden hiermee ook geladen. 
+
+### Opdracht 0
+Probeer eens of dat nu al lukt ? Knopje linksboven...
+
+## Chunks
+In de *R Markdown*-files staan *chunks*, hierin staat *R-code* en ze zijn genummerd. Links onder kun je makkelijk navigeren (!).
+Er zijn eigenlijk steeds twee soorten *chunks*: 
+
+* Chunks waar we de R-code al in hebben gezet. schrijf hier zelf niet in !
+* Chunks waarin we expliciet aangeven dat we jouw code willen
+
+Zie hieronder de eerste *(R-code) chunk* van het eerste type:
+
+```{r chunk_1, echo = TRUE, warning = FALSE, message = FALSE }
+# Clean memory and close graphs
+rm(list = ls()) # wis alles
+graphics.off()
+
+# install.packages("knitr")
+
+# Load the packages 
+library("knitr")
+```
+.[`Chunk 1`]{style="float:right"}  
+
+En hieronder ook eentje van het tweede type. Maar daarbij horen wel altijd ...
+
+##Opdrachten
+
+### Opdracht 1
+Voer de volgende twee commando's uit:
+
+* `table(mtcars$cyl)`
+* `plot(mtcars$disp, mtcars$mpg)`
+
+(NB: het effect zie je als het hieronder in de *chunk* plaatst en je vervolgens opnieuw *knit*)
+```{r chunk_2}
+# Hieronder jouw code
+
+# Einde van jouw code
+```
+.[`Chunk 2`]{style="float:right"}  
+
+Het is een beetje vervelend om via *knitten* je code steeds te runnen. Daarom raden we je aan **vooraf** het volgende te doen: run in de **R Console** de volgende commando's runnen:
+
+```{r chunk_3, echo = TRUE, eval = FALSE, prompt = TRUE}
+# install.packages("knitr")
+library("knitr")
+setwd("pad-naar-bestandsmap-van-de Rmd-file: gebruik / ") #pas deze aan !
+purl("VA_2018_2019_SEM2_Opdr_<X>.Rmd") #pas deze aan !
+```
+.[`Chunk 3`]{style="float:right"}  
+
+* dit genereert een `R script` (`VA_2018_2019_SEM2_Opdr_<X>.R`) met alle meegegeven code, ook de lege stukjes waar je zelf code moet plaatsen.
+* hier kun je vervolgens mee experimenteren bij wijze van een (klad-)script
+* heb je de gewenste resultaten, dan plak je de stukjes gevraagde code op de daarvoor bestemde plaats (juiste *chunk*) in de `RMarkdown` file die je gaat inleveren.
+* lever het `R-script` zelf **niet** in
+
+### Opdracht 2
+Doe bovenstaande en controleer dat er ook daadwerkelijk een R-file gemaakt is.
+
+##Vragen
+Ook zul je wel eens gewoon met tekst vragen moeten beantwoorden. Zoals hieronder. Het spreekt nogal voor zich, maar vervang de "..." door jouw tekst. Bij opsommingen moet je even opletten, dit zul je in opdracht 1 van deze week vanzelf tegenkomen. En o ja, we nummeren opdrachten en vragen gewoon door...
+
+### Vraag 3
+Bespreek in 3 zinnen wat je zojuist allemaal geleerd hebt.
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
+
+## Inleveren RMD-file
+Lees [hier](https://studiedelen.mijnhva.nl/studiedelen/ft-6100VISU16/1819-1/Documents/VA_2018_2019_SEM2_Opdrachten_Algemeen.html) hoe dit werkt !!
+
+### Opdracht 4
+Deze opdracht staat er in het vervolg nooit meer in, maar genereer nu alles ingevuld is een html-document door voor de laaste maal te *knitten*. Zorg dat ook 
+
+* de **file-naam** correct is
+* de **author** correct is
+* de **date** correct is
+
+Laat je resultaat vanuit jouw beeldscherm aan de docent zien.

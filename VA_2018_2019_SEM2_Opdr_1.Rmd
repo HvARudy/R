@@ -1,0 +1,213 @@
+---
+title: "VA 2018-2019 sem-2 Opdracht 1"
+author: "<vul je naam in>"
+date: "<vul de datum in>"
+output: 
+        html_document: ## pdf_document 
+          theme: cerulean
+          toc: true
+          number_sections: false
+editor_options: 
+  chunk_output_type: console
+---
+### Deadline
+De deadline voor deze opdracht is:
+
+* Dinsdag 12 februari 23:29
+
+# Eurostat dataset
+
+We zullen deze lessenserie werken met diverse tabellen met data afkomstig uit de open source dataset Eurostat.
+Voor meer informatie zie ook [eurostat R package](http://ropengov.github.io/eurostat/) en meer algemeen de website van de [Eurostat database](https://ec.europa.eu/eurostat/data/database). We vinden in de eurostat dataset vele tabellen met gegevens aangaande diverse thema's over de bevolking en landen van de E.U.
+
+### Vraag 1
+Bekijk het [overzicht per thema](https://ec.europa.eu/eurostat/data/browse-statistics-by-theme) van de eurostat data en geef aan welke thema's er te kiezen zijn.
+
+> Jouw antwoord (steeds twee spaties geven achter ieder item)  
+1. General and regional statistics  
+2. ...  
+(Einde antwoord)
+
+Door deze *R Markdown* file via **knit** te compileren wordt alle code gerund (installeer eventueel eerst de packages) en de packages worden hiermee ook geladen. Zie onder in de eerste *(R-code) chunk*:
+
+```{r chunk_1, echo = TRUE, warning = FALSE, message = FALSE }
+# Clean memory and close graphs
+rm(list = ls()) # wis alles
+graphics.off()
+
+#Installatie Eurostat
+# info: http://ropengov.github.io/eurostat/
+# install.packages("spData")
+# install.packages("eurostat")
+
+#Installatie andere packages
+# install.packages("rvest")
+# install.packages("knitr")
+# install.packages("countrycode")
+
+# Load the packages 
+library("eurostat") 
+library("rvest")
+library("knitr")
+library("countrycode")
+```
+.[`Chunk 1`]{style="float:right"}  
+
+# Data overzicht
+Met deze code kun je een deel (alleen de eerste 20) van alle tabelnamen zien:
+```{r chunk_2, echo = TRUE}
+toc <- get_eurostat_toc()
+kable((toc[1:20,c(1,2,3,6,7)]))
+```
+.[`Chunk 2`]{style="float:right"}  
+
+# Geboortecijfers
+We gaan ons nu eerst eens richten op het visualiseren van geboortecijfers uit diverse landen van de Europese Unie.
+Hieronder zie je een tabel met deze data op *NUTS level 2*. Meer info over NUTS-levels vind je [hier](https://ec.europa.eu/eurostat/web/nuts/background) en details in bijvoorbeeld deze [lijst](https://eur-lex.europa.eu/legal-content/NL/TXT/HTML/?uri=CELEX:32016R2066&from=EN).
+
+Hieronder laden en tonen we wat info uit de tabel *"Fertility rates by age and NUTS 2 region"*. het dataframe waarin we dit plaatsen heet `dat1`. Eventuele informatie over de data (*Metadata*) vind je via de link **Metadata** vanaf de [infopagina](https://ec.europa.eu/eurostat/web/products-datasets/product?code=demo_r_frate2). 
+
+```{r chunk_3, echo = FALSE, warning = FALSE, message = FALSE }
+id1 <- search_eurostat("Fertility rates by age and NUTS 2 region", type = "dataset")$code[1]
+#ALLE DATA
+dat1 <- get_eurostat(id1)
+dat1[c(1,87508, 370289, 372971, 7),] #speciale uitgekozen selectie van verschilende categorien
+```
+.[`Chunk 3`]{style="float:right"}  
+
+Wat niet zo triviaal te interpreteren is, zijn de waarden in de kolom `values`, let hierbij op dat dit bij `age` gelijk aan `TOTAL` even anders zit dan wanneer je bij bijvoorbeeld `age` gelijk aan `Y35` kijkt. Als je [dit](https://www.k4health.org/sites/default/files/Total%20Fertility%20Rate%20and%20Age-Specific%20Fertility%20Rate.pdf) leest lukt het je misschien om deze cijfers correct te interpreteren.
+
+### Vraag 2
+Geef van de hierboven getoonde 5 rijen uit het `dat1`-dataframe aan welke informatie er wordt weergegeven. 
+
+* Welk land of welke regio? 
+* Welke leeftijdsgroep(en)?
+* Welke periode?
+* Welk NUTS-level?
+* Beschrijf de informatie die de waarde in `values` weergeeft?
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
+
+
+We willen middels visualisatie wat zicht krijgen op de data uit `dat1`. We moeten oppassen dat we geen appels met peren gaan vergelijken, hiervoor is wat behoefte aan ordening.
+
+### Opdracht 3
+Schrijf een stukje R-code dat ervoor zorgt dat er twee kolommen worden toegevoegd aan het `dat1`-dataframe:
+
+* een kolom `NUTS` die het **NUTS-level* van de regio aangeeft, hierin staan waarden `as.factor()` (!):
+    +  0 als het een geheel land betreft (bijvoorbeeld: '"BE"`)
+    +  1 als het een NUTS-level 1 is
+    +  2 als het een NUTS-level 2 is
+* een kolom `country` waarin de engelse landnamen waartoe de regio behoort staan (de functie `countrycode` uit het gelijknamige package kan hierbij handig zijn)
+* wijzig ook de kolom `time` zodanig dat er alleen het jaar (4 cijfers) staat (kijk bijvoorbeeld eens [hier](https://www.statmethods.net/input/dates.html))
+
+```{r chunk_4}
+# Hieronder jouw code
+
+# Einde van jouw code
+```
+.[`Chunk 4`]{style="float:right"}  
+
+#Data verkennen
+Eerst maar eens op NUTS-level 0. 
+
+### Opdracht 4
+Schrijf hieronder een stukje `R` code dat zorgt dat we alleen de data uit `dat1` overhouden die betrekkening heeft op:
+
+* NUTS-level 0
+* de gegevens van de *Total fertility rate (TFR)* 
+* Noem het resultaat dataframe `dat1.NUTS0.TOTAL`
+* Maak met behulp van de functie `table` en het dataframe dat1.NUTS0.TOTAL` een overzicht van het *aantal meetjaren*  dat er een meetresultaat (voor dit level en meetniveau) voor handen is *per land* in onze dataset.
+
+
+```{r chunk_5}
+# Hieronder jouw code
+
+# Einde van jouw code
+```
+.[`Chunk 5`]{style="float:right"}  
+
+### Vraag 5
+Bekijk de resultaten uit de tabel van opdracht 4 en indien nodig de data in de verschillende dataframes en beantwoord deze vragen
+
+* Voor welk land zijn de minste meetresultaten beschikbaar?
+  + Hoeveel metingen?
+  + Voor welke jaren ?
+* Kies een van de landen dat een maximum aantal meetjaren heeft (noteer de engelse naam in je antwoord hieronder). Dit land gaat in het vervolg van de opdracht jouw *keuzeland* heten
+  + Over welke jaren gaan alle metingen van je *keuzeland*?
+* Kies een jaar (noteer dit in je antwoord) en 
+  + stel vast wat de TFR dat jaar voor jouw *keuzeland* was
+  + sommeer de *Age Specific Fertility Rates (ASFR)* voor dat jaar van jouw *keuzeland* en rond af op 2 decimalen. Wat valt op? verklaar dit resultaat.
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
+
+# Visualisatie
+Waar we graag een beetje zicht op willen krijgen is hoe de metingen per land zich ten opzicht van elkaar verhouden.
+We gaan gebruik maken van visualisatietechnieken uit de `base`-functies die `r` biedt, dat wil zeggen dat we geen `library` hiervoor gaan laden.
+
+### Opdracht 6
+Maak met behulp van `plot()` een simpel dotplot waarin je de jaren tegen de TFR uitzet van je *keuzeland*. Zorg voor correcte as-titels en een titel.
+
+```{r chunk_6}
+# Hieronder jouw code
+
+# Einde van jouw code
+```
+.[`Chunk 6`]{style="float:right"}  
+
+### Vraag 7
+* Wat is de *range* (hoogste - laagste waarde) van de TFR gedurende de totale meetperiode van jouw *keuzeland* ?
+* Geef ook de hoogste waarde en laagste waarde
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
+
+### Opdracht 8
+Om zicht op de variatie te krijgen van alle overige landen maken we tenslotte een afbeelding met daarin een rij boxplots. Handige funties hiervoor zijn:
+
+* `boxplot()`
+    + parameters `main`, `axes`, `horizontal`, `ylim`
+* ga eens na wat de variabele `mijnboxplot$names` bevat?
+* `par()`
+    + in het bijzonder de parameter `mar` hiervan
+* `axis()`
+    + parameters `at`, `label`, `las`, `cex.axis`
+* `mtext()`
+    + ook parameter `cex`
+
+We willen:
+
+* De boxplots voor alle landen uit het `dat1.NUTS0.TOTAL` data frame, waarin 
+* de spreiding van de TFR af te lezen is
+* Landen namen (engels) langs de horizontale as
+    + Geen as titel nodig
+* TFR langs de verticale as
+    + Kies een geschikte as-titel en waardenbereik
+* labels voor beide assen loodrecht op de as-richting
+* Een geschikte titel bovenaan de afbeelding
+
+```{r chunk_7}
+# Hieronder jouw code
+
+# Einde van jouw code
+```
+.[`Chunk 7`]{style="float:right"}  
+
+### Vraag 9
+Beschrijf welke informatie de zojuist gegenereerde afbeelding weergeeft.
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
+
+### Vraag 10
+Noem een pluspunt en een minpunt van de zojuist gegenereerde afbeelding. Welke verbeterpunten stel je voor?
+
+> Jouw antwoord   
+...  
+(Einde antwoord)
